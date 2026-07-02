@@ -1,6 +1,0 @@
-{
-  "name": "Muzen",
-  "description": "Premium AI Music Generator made by Omegatech with support for Suno and Remusic models.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
