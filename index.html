@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Muzen — Turn Words Into Music</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-orb splash-orb-1"></div>
+  <div class="splash-orb splash-orb-2"></div>
+  <div class="splash-logo-wrap">
+    <svg class="splash-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="sg" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#ffd166"/>
+          <stop offset="50%" stop-color="#f0a500"/>
+          <stop offset="100%" stop-color="#a78bfa"/>
+        </linearGradient>
+      </defs>
+      <circle cx="32" cy="32" r="30" stroke="url(#sg)" stroke-width="2.5" fill="none" opacity="0.4"/>
+      <circle cx="32" cy="32" r="22" stroke="url(#sg)" stroke-width="2" fill="none" opacity="0.25"/>
+      <circle cx="32" cy="32" r="6" fill="url(#sg)" opacity="0.9"/>
+      <path d="M26 18 L26 30 M38 14 L38 26" stroke="url(#sg)" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="22" cy="32" r="4" stroke="url(#sg)" stroke-width="2" fill="none"/>
+      <circle cx="34" cy="28" r="4" stroke="url(#sg)" stroke-width="2" fill="none"/>
+    </svg>
+    <div class="splash-wordmark">
+      <span class="splash-letter">M</span><span class="splash-letter">u</span><span class="splash-letter">z</span><span class="splash-letter">e</span><span class="splash-letter">n</span>
+    </div>
+    <div class="splash-tagline" id="splashTagline">Turn words into music</div>
+  </div>
+  <div class="splash-progress"><div class="splash-progress-fill" id="splashBar"></div></div>
+</div>
+
+<!-- SIDEBAR MENU -->
+<div id="sidebarMenu" class="sidebar-menu">
+  <div class="sidebar-header">
+    <a class="nav-logo" href="#" onclick="navigateToPage('home'); closeSidebar(); return false;">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none">
+        <defs><linearGradient id="slg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f0a500"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
+        <path d="M8 24a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#slg)" stroke-width="2" fill="none"/>
+        <path d="M20 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#slg)" stroke-width="2" fill="none"/>
+        <path d="M12 20V10l12-3v10" stroke="url(#slg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="nav-logo-text">Muzen</span>
+    </a>
+    <button class="sidebar-close-btn" onclick="closeSidebar()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <ul class="sidebar-links">
+    <li>
+      <a href="#" class="sidebar-link active" id="side-link-home" onclick="navigateToPage('home'); closeSidebar(); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span>Home / Generator</span>
+      </a>
+    </li>
+    <li>
+      <a href="#explore" class="sidebar-link" id="side-link-explore" onclick="navigateToPage('explore'); closeSidebar(); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <span>Discover Feed</span>
+      </a>
+    </li>
+    <li>
+      <a href="#mysongs" class="sidebar-link" id="side-link-library" onclick="navigateToPage('library'); closeSidebar(); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        <span>My Saved Songs</span>
+      </a>
+    </li>
+    <li>
+      <a href="#how" class="sidebar-link" id="side-link-how" onclick="navigateToPage('how'); closeSidebar(); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>How it Works</span>
+      </a>
+    </li>
+    <li>
+      <a href="#faq" class="sidebar-link" id="side-link-faq" onclick="navigateToPage('faq'); closeSidebar(); return false;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="16" y1="2" x2="16" y2="4"/><line x1="8" y1="2" x2="8" y2="4"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>FAQ &amp; Support</span>
+      </a>
+    </li>
+  </ul>
+  <div class="sidebar-footer">
+    <p>Muzen is made by <strong>Omegatech / The honored one</strong></p>
+  </div>
+</div>
+<div id="sidebarOverlay" class="sidebar-overlay" onclick="closeSidebar()"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-left">
+    <button class="hamburger-btn" onclick="openSidebar()" aria-label="Open Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a class="nav-logo" href="#" onclick="navigateToPage('home'); return false;">
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none">
+        <defs><linearGradient id="nlg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#f0a500"/><stop offset="100%" stop-color="#a78bfa"/></linearGradient></defs>
+        <path d="M8 24a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#nlg)" stroke-width="2" fill="none"/>
+        <path d="M20 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#nlg)" stroke-width="2" fill="none"/>
+        <path d="M12 20V10l12-3v10" stroke="url(#nlg)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="nav-logo-text">Muzen</span>
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#" class="nav-link-tab active i18n-home" id="nav-link-home" onclick="navigateToPage('home'); return false;">Home</a></li>
+    <li><a href="#explore" class="nav-link-tab" id="nav-link-explore" onclick="navigateToPage('explore'); return false;">Discover</a></li>
+    <li><a href="#mysongs" class="nav-link-tab i18n-mysongs" id="nav-link-library" onclick="navigateToPage('library'); return false;">My Songs</a></li>
+    <li><a href="#how" class="nav-link-tab i18n-how" id="nav-link-how" onclick="navigateToPage('how'); return false;">How it Works</a></li>
+    <li><a href="#faq" class="nav-link-tab" id="nav-link-faq" onclick="navigateToPage('faq'); return false;">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    <span class="nav-free-badge i18n-freebadge">Free</span>
+    <button class="nav-cta" onclick="navigateToPage('home'); document.getElementById('generatorCard').scrollIntoView({behavior: 'smooth'})">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <span class="i18n-navgenerate">Generate</span>
+    </button>
+  </div>
+</nav>
+
+<!-- MAIN APP PAGES WRAPPER -->
+<main id="app-pages">
+
+  <!-- PAGE: HOME -->
+  <div id="page-home" class="app-page active">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+      <div class="hero-inner">
+        <div class="hero-badge" id="heroBadge">
+          <svg viewBox="0 0 12 12" fill="currentColor"><circle cx="6" cy="6" r="6"/></svg>
+          <span class="i18n-herobadge">AI Music Generation · Free to use</span>
+        </div>
+        <h1 class="hero-title" id="heroTitle">
+          <span class="word"><span class="i18n-hero1">Your&nbsp;</span></span><span class="word"><span class="i18n-hero2">words.</span></span><br>
+          <span class="word"><span class="accent i18n-hero3">Your&nbsp;</span></span><span class="word"><span class="i18n-hero4">song.</span></span>
+        </h1>
+        <p class="hero-sub i18n-herosub" id="heroSub">Type a feeling, a memory, a mood — Muzen turns it into a real song in seconds. No account needed. Just create.</p>
+
+        <!-- GENERATOR CARD -->
+        <div class="generator" id="generatorCard">
+
+          <!-- MODEL VERSION SWITCHER -->
+          <div class="version-tabs-container">
+            <button class="v-tab active" id="v-tab-v1" onclick="switchVersion('v1')">Muzen-1.0</button>
+            <button class="v-tab" id="v-tab-v2" onclick="switchVersion('v2')">Muzen-2.0</button>
+          </div>
+
+          <!-- V2 MODE SELECTOR (Only shown if V2 is active) -->
+          <div class="v2-only mode-tabs-container" id="v2ModeContainer" style="display: none;">
+            <button class="m-tab active" id="m-tab-simple" onclick="switchV2Mode('simple')">Simple Mode</button>
+            <button class="m-tab" id="m-tab-custom" onclick="switchV2Mode('custom')">Custom &amp; Lyrics Mode</button>
+          </div>
+
+          <!-- V2 MANUAL FIELDS (Only shown if V2 & Custom active) -->
+          <div class="v2-manual-fields" id="v2ManualFields" style="display: none;">
+            <!-- TITLE -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V3A2.5 2.5 0 0 1 6.5 0.5H20v16.5H6.5a2.5 2.5 0 0 0-2.5 2.5z"/></svg>
+                <span>Song Title</span>
+                <span class="optional">Optional custom title</span>
+              </div>
+              <input type="text" class="gen-username" id="v2Title" placeholder="Whispers of Joy..." style="margin-top:0.5rem; width:100%;" />
+            </div>
+
+            <!-- LYRICS -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>Custom Lyrics</span>
+                <span class="optional">Leave blank to auto-generate lyrics</span>
+              </div>
+              <textarea class="gen-textarea" id="v2Lyrics" placeholder="[Intro]&#10;In a world of our own, where the beats never fade...&#10;&#10;[Verse]&#10;Electric vibes, lighting up the night...&#10;We're lost in this rhythm, flying high..." style="margin-top:0.5rem; min-height: 120px;"></textarea>
+            </div>
+          </div>
+
+          <!-- PROMPT / DESCRIPTION (Shared) -->
+          <div class="gen-section">
+            <div class="gen-label">
+              <div style="display:flex; align-items:center; gap:0.5rem;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span class="i18n-describe" id="promptBoxLabel">Describe your song</span>
+              </div>
+              <div style="margin-left:auto; display:flex; gap:0.5rem;">
+                <button class="nav-free-badge i18n-random" style="cursor:pointer; background:rgba(240,165,0,0.1); border-color:rgba(240,165,0,0.25); color:var(--gold);" onclick="randomPrompt()">🎲 Random</button>
+                <button class="nav-free-badge i18n-enhance" style="cursor:pointer;" onclick="enhancePrompt(this)">✨ Enhance</button>
+              </div>
+            </div>
+            <textarea class="gen-textarea i18n-placeholder" id="genTextarea" placeholder="A rainy night in a city that forgot my name, neon lights, empty streets..."></textarea>
+          </div>
+
+          <!-- USERNAME (Shared) -->
+          <div class="gen-section">
+            <div class="gen-label">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <span class="i18n-username">Username</span>
+              <span class="optional i18n-optional">Optional — free, no sign-up</span>
+            </div>
+            <div class="gen-username-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              <input type="text" class="gen-username" id="genUsername" placeholder="your_name (saves songs to your library)"/>
+            </div>
+          </div>
+
+          <!-- V1 ONLY FIELDS -->
+          <div class="v1-only-fields" id="v1OnlyFields">
+            <!-- CHOOSE SOUND -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                <span class="i18n-choosesound">Choose your sound</span>
+              </div>
+              <div class="models-row">
+                <div class="model-card active" data-model="Melody">
+                  <div class="model-card-glow"></div>
+                  <svg class="model-icon" viewBox="0 0 32 32" fill="none">
+                    <defs><linearGradient id="mg1" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#f0a500"/><stop offset="1" stop-color="#ffd166"/></linearGradient></defs>
+                    <path d="M8 26a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#mg1)" stroke-width="2" fill="none"/>
+                    <path d="M12 22V8l14-3v14" stroke="url(#mg1)" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M26 19a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#mg1)" stroke-width="2" fill="none"/>
+                  </svg>
+                  <div class="model-name">Melody</div>
+                  <div class="model-desc i18n-model1">Pop, catchy hooks, clean vocals</div>
+                </div>
+                <div class="model-card" data-model="Harmony">
+                  <div class="model-card-glow"></div>
+                  <svg class="model-icon" viewBox="0 0 32 32" fill="none">
+                    <defs><linearGradient id="mg2" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#6d28d9"/></linearGradient></defs>
+                    <path d="M4 16c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12S4 22.627 4 16z" stroke="url(#mg2)" stroke-width="2" fill="none"/>
+                    <path d="M10 16c0-3.314 2.686-6 6-6s6 2.686 6 6-2.686 6-6 6-6-2.686-6-6z" stroke="url(#mg2)" stroke-width="2" fill="none"/>
+                    <circle cx="16" cy="16" r="2" fill="url(#mg2)"/>
+                  </svg>
+                  <div class="model-name">Harmony</div>
+                  <div class="model-desc i18n-model2">Cinematic, emotional, rich</div>
+                </div>
+                <div class="model-card" data-model="Rhythm">
+                  <div class="model-card-glow"></div>
+                  <svg class="model-icon" viewBox="0 0 32 32" fill="none">
+                    <defs><linearGradient id="mg3" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#e8357a"/><stop offset="1" stop-color="#f0a500"/></linearGradient></defs>
+                    <rect x="4" y="20" width="5" height="8" rx="2" stroke="url(#mg3)" stroke-width="2" fill="none"/>
+                    <rect x="13" y="14" width="5" height="14" rx="2" stroke="url(#mg3)" stroke-width="2" fill="none"/>
+                    <rect x="22" y="8" width="5" height="20" rx="2" stroke="url(#mg3)" stroke-width="2" fill="none"/>
+                    <path d="M4 10 L10 6 L16 10 L22 4" stroke="url(#mg3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                  <div class="model-name">Rhythm</div>
+                  <div class="model-desc i18n-model3">Hip-hop, trap, electronic</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- V1 GENRES -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                <span class="i18n-genre">Genre</span>
+              </div>
+              <div class="tags-row">
+                <span class="tag active">Pop</span>
+                <span class="tag">R&amp;B</span>
+                <span class="tag">Hip-Hop</span>
+                <span class="tag">Lo-fi</span>
+                <span class="tag">Rock</span>
+                <span class="tag">Jazz</span>
+                <span class="tag">Electronic</span>
+                <span class="tag">Acoustic</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- V2 ONLY FIELDS -->
+          <div class="v2-only-fields" id="v2OnlyFields" style="display: none;">
+            <!-- V2 Genre Select -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                <span>Genre</span>
+              </div>
+              <div class="select-wrap">
+                <select id="v2Genre">
+                  <option value="Pop" selected>Pop</option>
+                  <option value="Rock">Rock</option>
+                  <option value="Hip-Hop">Hip-Hop</option>
+                  <option value="R&B">R&B</option>
+                  <option value="Jazz">Jazz</option>
+                  <option value="Classical">Classical</option>
+                  <option value="Electronic">Electronic</option>
+                  <option value="EDM">EDM</option>
+                  <option value="Lo-fi">Lo-fi</option>
+                  <option value="Ambient">Ambient</option>
+                  <option value="Reggae">Reggae</option>
+                  <option value="Country">Country</option>
+                  <option value="Folk">Folk</option>
+                  <option value="Metal">Metal</option>
+                  <option value="Blues">Blues</option>
+                  <option value="Funk">Funk</option>
+                  <option value="Soul">Soul</option>
+                  <option value="Disco">Disco</option>
+                  <option value="House">House</option>
+                  <option value="Techno">Techno</option>
+                  <option value="Trap">Trap</option>
+                  <option value="Drum and Bass">Drum and Bass</option>
+                  <option value="K-Pop">K-Pop</option>
+                  <option value="J-Pop">J-Pop</option>
+                  <option value="Latin">Latin</option>
+                  <option value="Afrobeat">Afrobeat</option>
+                  <option value="Cinematic">Cinematic</option>
+                  <option value="Orchestral">Orchestral</option>
+                  <option value="Acoustic">Acoustic</option>
+                  <option value="Punk">Punk</option>
+                  <option value="Gospel">Gospel</option>
+                  <option value="Indie">Indie</option>
+                  <option value="Synthwave">Synthwave</option>
+                  <option value="Bossa Nova">Bossa Nova</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- V2 Mood Select -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+                <span>Mood</span>
+              </div>
+              <div class="select-wrap">
+                <select id="v2Mood">
+                  <option value="Happy" selected>Happy</option>
+                  <option value="Calm">Calm</option>
+                  <option value="Sad">Sad</option>
+                  <option value="Energetic">Energetic</option>
+                  <option value="Romantic">Romantic</option>
+                  <option value="Epic">Epic</option>
+                  <option value="Dark">Dark</option>
+                  <option value="Dreamy">Dreamy</option>
+                  <option value="Uplifting">Uplifting</option>
+                  <option value="Melancholic">Melancholic</option>
+                  <option value="Chill">Chill</option>
+                  <option value="Aggressive">Aggressive</option>
+                  <option value="Peaceful">Peaceful</option>
+                  <option value="Nostalgic">Nostalgic</option>
+                  <option value="Mysterious">Mysterious</option>
+                  <option value="Hopeful">Hopeful</option>
+                  <option value="Sensual">Sensual</option>
+                  <option value="Playful">Playful</option>
+                  <option value="Angry">Angry</option>
+                  <option value="Triumphant">Triumphant</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- V2 Vocal Radios Grid -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg>
+                <span>Vocal Style</span>
+              </div>
+              <div class="vocal-radios-grid">
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Female Vocal" checked />
+                  <span>👩 Female</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Male Vocal" />
+                  <span>👨 Male</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Duet" />
+                  <span>👫 Duet</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Choir" />
+                  <span>⛪ Choir</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Soft Vocal" />
+                  <span>☁️ Soft</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Powerful Vocal" />
+                  <span>🔥 Powerful</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Rap" />
+                  <span>🎤 Rap</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Vocal" value="Whisper" />
+                  <span>🤫 Whisper</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- V2 Tempo Radios -->
+            <div class="gen-section">
+              <div class="gen-label">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span>Tempo</span>
+              </div>
+              <div class="vocal-radios-grid">
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Tempo" value="Slow" />
+                  <span>Slow 🐢</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Tempo" value="Mid-tempo" checked />
+                  <span>Mid-tempo 🚶</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Tempo" value="Upbeat" />
+                  <span>Upbeat ⚡</span>
+                </label>
+                <label class="vocal-radio-label">
+                  <input type="radio" name="v2Tempo" value="Fast" />
+                  <span>Fast 🚀</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="gen-divider"></div>
+
+          <!-- GENERATE BUTTON -->
+          <button class="gen-btn" id="genBtn" onclick="handleGenerate(this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" id="genBtnIcon"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+            <span id="genBtnText" class="i18n-generatebtn">Generate My Song — Free</span>
+            <div class="wave-loader" id="waveLoader">
+              <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+            </div>
+          </button>
+
+          <!-- RESULT CARD (Shows most recently generated song locally) -->
+          <div class="result-card" id="resultCard">
+            <div class="result-top">
+              <div class="result-art" id="resultArt">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+              </div>
+              <div class="result-info">
+                <h3 id="resultTitle">Rainy City Night</h3>
+                <p id="resultMeta">Melody · Pop · 3:24</p>
+              </div>
+            </div>
+            <div class="result-actions">
+              <button class="result-btn play" onclick="openPlayer(currentSong.id, currentSong.title, currentSong.artist, currentSong.audioUrl, currentSong.thumbnail)">
+                <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span class="i18n-play">Play</span>
+              </button>
+              <button class="result-btn" onclick="saveSong()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                <span class="i18n-save">Save</span>
+              </button>
+              <button class="result-btn" onclick="downloadSong()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span class="i18n-download">Download</span>
+              </button>
+              <button class="result-btn" onclick="shareSongCurrent()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                <span>Share</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- ACTIVE GENERATIONS QUEUE (Persistent Queue list for multiple parallel generation tasks) -->
+          <div id="generationsQueue" class="generations-queue" style="display:none;">
+            <h4 class="queue-title">⚡ Background Generations</h4>
+            <div id="queueItems" class="queue-items"></div>
+          </div>
+
+        </div><!-- /generator -->
+      </div>
+    </section>
+  </div>
+
+  <!-- PAGE: DISCOVER / EXPLORE FEED -->
+  <div id="page-explore" class="app-page">
+    <div class="section">
+      <div class="section-header">
+        <h2 class="section-title">Community Discover</h2>
+        <span class="section-count">Featured Tracks</span>
+      </div>
+      <p style="color:var(--muted); font-size:0.92rem; margin-top:-0.5rem; margin-bottom:2rem;">Explore the finest AI creations generated with Muzen. Play any track instantly or copy lyrics.</p>
+      <div class="songs-grid" id="exploreGrid">
+        <!-- Curated featured songs loaded by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: LIBRARY (My Songs) -->
+  <div id="page-library" class="app-page">
+    <div class="section" id="mysongs">
+      <div class="section-header">
+        <h2 class="section-title i18n-mysongstitle">My Library</h2>
+        <span class="section-count" id="mySongsCount">0 tracks</span>
+      </div>
+      <div class="songs-grid" id="songsGrid">
+        <p class="i18n-nosongs" style="color:var(--muted); font-size:0.9rem;">You haven't saved any songs yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: HOW IT WORKS -->
+  <div id="page-how" class="app-page">
+    <div class="how" id="how">
+      <div class="how-inner">
+        <div class="how-eyebrow i18n-howeyebrow">How it works</div>
+        <h2 class="how-title i18n-howtitle">From idea to track in seconds</h2>
+        <p class="how-sub i18n-howsub">No account, no instruments, no experience needed</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="url(#sg1)" stroke-width="1.8">
+                <defs><linearGradient id="sg1" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#f0a500"/><stop offset="1" stop-color="#ffd166"/></linearGradient></defs>
+                <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+              </svg>
+            </div>
+            <h4 class="i18n-step1title">Write anything</h4>
+            <p class="i18n-step1sub">A sentence, a feeling, or full lyrics — Muzen understands it all</p>
+          </div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="url(#sg2)" stroke-width="1.8">
+                <defs><linearGradient id="sg2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#6d28d9"/></linearGradient></defs>
+                <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+              </svg>
+            </div>
+            <h4 class="i18n-step2title">Pick a model</h4>
+            <p class="i18n-step2sub">Choose Muzen-1.0 or Muzen-2.0 with custom parameters</p>
+          </div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="url(#sg3)" stroke-width="1.8">
+                <defs><linearGradient id="sg3" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#e8357a"/><stop offset="1" stop-color="#f0a500"/></linearGradient></defs>
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <h4 class="i18n-step3title">Generate</h4>
+            <p class="i18n-step3sub">Muzen composes, arranges and produces your full track instantly</p>
+          </div>
+          <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="url(#sg4)" stroke-width="1.8">
+                <defs><linearGradient id="sg4" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse"><stop stop-color="#0ed2f7"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+              </svg>
+            </div>
+            <h4 class="i18n-step4title">Listen &amp; share</h4>
+            <p class="i18n-step4sub">Play with synced lyrics, download the MP3, or share your song</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: FAQ & HELP -->
+  <div id="page-faq" class="app-page">
+    <div class="pricing">
+      <div class="pricing-inner">
+        <div class="pricing-eyebrow">FAQ &amp; Help</div>
+        <h2 class="pricing-title">Got Questions? We have answers.</h2>
+        <p class="pricing-sub">Muzen is 100% free with no subscription, sign-ups, or hidden fees!</p>
+
+        <div class="faq-accordion">
+          <!-- FAQ 1 -->
+          <div class="faq-item" id="faq1">
+            <button class="faq-trigger" onclick="toggleFaq('faq1')">
+              <h3>Is Muzen really 100% free to use?</h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <p>Yes, absolutely! Muzen is built to be a free-for-all creative environment. There are no credit cards, hidden subscriptions, or watermark fees. You can generate unlimited tracks using both Muzen-1.0 and Muzen-2.0 models.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item" id="faq2">
+            <button class="faq-trigger" onclick="toggleFaq('faq2')">
+              <h3>What are the differences between Muzen-1.0 and Muzen-2.0?</h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <p>Muzen-1.0 specializes in high-fidelity catchy tracks. Muzen-2.0 supports detailed parameters (selecting specific genres, moods, vocals, and tempo values) as well as an advanced Custom/Manual mode where you can input custom lyrics and titles.</p>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item" id="faq3">
+            <button class="faq-trigger" onclick="toggleFaq('faq3')">
+              <h3>How can I run multiple generations concurrently?</h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <p>Muzen features a real-time Background Generations Queue. After triggering a song, you can immediately change parameters and click generate again. The songs will process in the background, and you'll receive a toast notification and a prompt when they finish!</p>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item" id="faq4">
+            <button class="faq-trigger" onclick="toggleFaq('faq4')">
+              <h3>Who made Muzen AI?</h3>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-content">
+              <p>Muzen is proudly crafted and presented by <strong>Omegatech / The honored one</strong>, pushing the boundaries of generative AI and state-of-the-art neural music synthesis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- PERSISTENT MINI PLAYER -->
+<div id="miniPlayer" class="mini-player" style="display:none;">
+  <div class="mini-player-art" onclick="openPlayer()">
+    <img id="miniPlayerThumb" src="" alt="" style="display:none;" />
+    <svg id="miniPlayerDefaultArt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+  </div>
+  <div class="mini-player-info" onclick="openPlayer()">
+    <div id="miniPlayerTitle" class="mini-title">Rainy City Night</div>
+    <div id="miniPlayerArtist" class="mini-artist">Muzen AI · Melody</div>
+  </div>
+  <div class="mini-player-controls">
+    <button class="mini-play-btn" id="miniPlayPauseBtn" onclick="togglePlay(); event.stopPropagation();">
+      <svg id="miniPlayIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <svg id="miniPauseIcon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
+    <button class="mini-close-btn" onclick="closeMiniPlayer(); event.stopPropagation();">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <svg class="footer-logo-icon" viewBox="0 0 32 32" fill="none">
+      <defs><linearGradient id="flg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse"><stop stop-color="#f0a500"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
+      <path d="M8 24a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#flg)" stroke-width="2" fill="none"/>
+      <path d="M20 20a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" stroke="url(#flg)" stroke-width="2" fill="none"/>
+      <path d="M12 20V10l12-3v10" stroke="url(#flg)" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="footer-logo-text">Muzen</span>
+  </div>
+  <p class="footer-tag i18n-footertag">Turn words into music · Free forever</p>
+  <div class="footer-socials">
+    <a href="https://www.tiktok.com/@lonely_world01" target="_blank" class="social-btn" title="TikTok @lonely_world01" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+      <!-- lonely_world01 -->
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:18px;height:18px;"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.27 8.27 0 0 0 4.83 1.54V6.78a4.85 4.85 0 0 1-1.07-.09z"/></svg>
+    </a>
+    <a href="https://www.facebook.com/Omegatech00" target="_blank" class="social-btn" title="Facebook" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+    <a href="https://github.com/Omegatech-01/Muzen" target="_blank" class="social-btn" title="GitHub" style="text-decoration: none; display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+    </a>
+  </div>
+  <p class="footer-copy">© 2026 Muzen AI. All rights reserved.</p>
+</footer>
+
+<!-- ACTIVITY FEED -->
+<div class="activity-feed" id="activityFeed"></div>
+
+<!-- PLAYER -->
+<div id="player-overlay">
+  <div class="player-backdrop" onclick="closePlayer()"></div>
+  <div class="player-panel" id="playerPanel">
+    <div class="player-handle"></div>
+    <div class="player-top">
+      <button class="player-icon-btn" onclick="closePlayer()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <span class="player-top-title i18n-nowplaying">Now Playing</span>
+      <button class="player-icon-btn" onclick="toggleLyrics()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- DISC -->
+    <div class="disc-area" id="discArea" onclick="toggleLyrics()">
+      <div class="disc-ring">
+        <div class="disc-art playing" id="discArt">
+          <div class="disc-center">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.8">
+              <path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="disc-tap-hint i18n-taplyrics">Tap for lyrics</div>
+    </div>
+
+    <div class="player-song-title" id="playerTitle">Rainy City Night</div>
+    <div class="player-artist-row">
+      <span class="player-artist-name" id="playerArtist">Muzen AI · Melody</span>
+      <button class="heart-btn" id="heartBtn" onclick="toggleHeart(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progressBar" onclick="seekSong(event, this)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-times">
+        <span id="currentTime">0:00</span>
+        <span id="totalTime">0:00</span>
+      </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button class="ctrl-btn" title="Shuffle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>
+      </button>
+      <button class="ctrl-btn" title="Previous" onclick="prevSong()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+      </button>
+      <button class="play-pause" id="playPauseBtn" onclick="togglePlay()">
+        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      </button>
+      <button class="ctrl-btn" title="Next" onclick="nextSong()">
+        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+      </button>
+      <button class="ctrl-btn" title="Repeat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+      </button>
+    </div>
+    <div class="player-extras">
+      <button class="extra-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span class="i18n-timer">Timer</span>
+      </button>
+      <button class="extra-btn" onclick="downloadSong()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span class="i18n-downloadbtn">Download</span>
+      </button>
+      <button class="extra-btn" onclick="sharePlayerSong()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        <span>Share</span>
+      </button>
+    </div>
+
+    <!-- LYRICS PANEL -->
+    <div class="lyrics-panel" id="lyricsPanel">
+      <div class="lyrics-header">
+        <div class="disc-mini playing" id="discMini" onclick="toggleLyrics()">
+          <div class="disc-mini-center"></div>
+        </div>
+        <div class="lyrics-song-info">
+          <h4 id="lyricsSongTitle">Rainy City Night</h4>
+          <p class="i18n-tapback">Tap disc to go back to player</p>
+        </div>
+      </div>
+      <div class="lyrics-scroll" id="lyricsScroll"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE TRACK MODAL -->
+<div id="share-modal" class="share-modal-overlay" style="display:none;">
+  <div class="share-modal-backdrop" onclick="closeShareModal()"></div>
+  <div class="share-content">
+    <div class="share-header">
+      <h3 class="share-modal-title">Share Track</h3>
+      <button class="share-close-btn" onclick="closeShareModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    
+    <div class="share-song-preview">
+      <div class="share-song-art" id="shareSongArt"></div>
+      <div class="share-song-meta">
+        <div class="share-song-name" id="shareSongTitle">Song Title</div>
+        <div class="share-song-artist" id="shareSongArtist">By Muzen AI</div>
+      </div>
+    </div>
+
+    <div class="share-link-group">
+      <input type="text" class="share-link-input" id="shareLinkInput" readonly value=""/>
+      <button class="share-copy-btn" id="shareCopyBtn" onclick="copyShareLink()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span id="shareCopyText">Copy</span>
+      </button>
+    </div>
+
+    <div class="share-platforms">
+      <div class="share-platforms-title">Quick Links</div>
+      <div class="share-platform-buttons">
+        <a href="https://www.tiktok.com/@lonely_world01" target="_blank" class="share-platform-btn tiktok" title="TikTok Profile">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.2a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.27 8.27 0 0 0 4.83 1.54V6.78a4.85 4.85 0 0 1-1.07-.09z"/></svg>
+          <span>TikTok</span>
+        </a>
+        <a href="https://www.facebook.com/Omegatech00" target="_blank" class="share-platform-btn facebook" title="Facebook Profile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          <span>Facebook</span>
+        </a>
+        <a href="https://github.com/Omegatech-01/Muzen" target="_blank" class="share-platform-btn github" title="GitHub Repository">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:16px;height:16px;"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.137 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<audio id="mainAudio" style="display:none"></audio>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script type="module" src="/src/script.js"></script>
+</body>
+</html>
